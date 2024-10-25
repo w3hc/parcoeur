@@ -12,11 +12,9 @@ describe('Header', () => {
       </ChakraProvider>
     )
 
-    // Check if site name is rendered
     const siteName = screen.getByText('Par coeur')
     expect(siteName).toBeInTheDocument()
 
-    // Check if menu button exists
     const menuButton = screen.getByRole('button', { name: /options/i })
     expect(menuButton).toBeInTheDocument()
   })

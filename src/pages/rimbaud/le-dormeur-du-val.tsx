@@ -11,7 +11,6 @@ export default function Poesie() {
   const poemTitle = 'Le Dormeur du Val'
   const poemAuthor = 'Arthur Rimbaud'
   const poemDate = 'Octobre 1870'
-  const poemDescription = "C'est un trou de verdure où chante une rivière ... "
 
   const poemLines = [
     ["C'est un trou de verdure où chante une rivière", 'Accrochant follement aux herbes des haillons'],
@@ -29,7 +28,7 @@ export default function Poesie() {
 
   return (
     <>
-      <Seo title={`${poemTitle} - ${poemAuthor}`} description={`${poemDescription}. Poème écrit en ${poemDate}`} />
+      <Seo title={poemTitle} description={poemAuthor} isPoem={true} />{' '}
       <main>
         <VStack spacing={8} px={4}>
           <Box maxW="600px" w="100%">
@@ -41,14 +40,16 @@ export default function Poesie() {
                   cursor="pointer"
                   _hover={{
                     bg: visibleStates[index] ? hoverVisibleBg : hoverHiddenBg,
+                    border: '1px solid #8c1c84',
+                    borderRadius: '10px',
                   }}
-                  transition="all 0.2s"
+                  transition="all 0.5s"
                   display="block"
                   width="100%"
-                  borderRadius="md"
+                  borderRadius="10px"
                   style={{
                     border: !visibleStates[index] ? '1px solid #8c1c84' : 'none',
-                    borderRadius: !visibleStates[index] ? '10px' : '4px',
+                    borderRadius: !visibleStates[index] ? '10px' : '10px',
                     padding: !visibleStates[index] ? '10px' : '12px',
                   }}>
                   <Flex direction="column" lineHeight="2em">
