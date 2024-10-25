@@ -2,7 +2,6 @@ import React from 'react'
 import { VStack, Box, Text, List, ListItem, useColorModeValue } from '@chakra-ui/react'
 import { LinkComponent } from '../components/layout/LinkComponent'
 import { Seo } from '../components/layout/Seo'
-import { HeadingComponent } from '../components/layout/HeadingComponent'
 
 const poets = [
   {
@@ -13,7 +12,6 @@ const poets = [
 ]
 
 export default function Home() {
-  const descriptionColor = useColorModeValue('rgba(69, 162, 248, 0.8)', 'rgba(69, 162, 248, 0.6)')
   const hoverBg = useColorModeValue('rgba(69, 162, 248, 0.1)', 'rgba(69, 162, 248, 0.2)')
 
   return (

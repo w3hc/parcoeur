@@ -5,11 +5,12 @@ import { SITE_DESCRIPTION, SITE_NAME, SITE_URL, SOCIAL_TWITTER } from '../../uti
 interface Props {
   title?: string
   description?: string
+  isPoem?: boolean
 }
 
-export function Seo({ title, description }: Props = {}) {
+export function Seo({ title, description, isPoem }: Props = {}) {
   const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : SITE_URL
-  const pageTitle = title ? `${title} | ${SITE_NAME}` : SITE_NAME
+  const pageTitle = isPoem ? title : title ? `${title} | ${SITE_NAME}` : SITE_NAME
   const pageDescription = description || SITE_DESCRIPTION
 
   return (
