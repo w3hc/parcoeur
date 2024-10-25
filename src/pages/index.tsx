@@ -9,6 +9,11 @@ const poets = [
     path: '/rimbaud',
     description: '1854-1891',
   },
+  {
+    name: 'Paul Valéry',
+    path: '/valery',
+    description: '1871-1945',
+  },
 ]
 
 export default function Home() {

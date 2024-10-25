@@ -37,6 +37,11 @@ export function Header(props: Props) {
               Rimbaud
             </MenuItem>
           </LinkComponent>
+          <LinkComponent href="/valery">
+            <MenuItem fontSize="md" _hover={{ bg: menuHoverBg }}>
+              Valéry
+            </MenuItem>
+          </LinkComponent>
         </MenuList>
       </Menu>
       <Flex alignItems="center" gap={4}>
