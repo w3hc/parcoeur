@@ -12,31 +12,33 @@ export default function Poesie() {
   const poemAuthor = 'Arthur Rimbaud'
   const poemDate = 'Octobre 1870'
 
-  const poemLines = [
-    ["C'est un trou de verdure où chante une rivière", 'Accrochant follement aux herbes des haillons'],
-    ["D'argent ; où le soleil, de la montagne fière,", "Luit : c'est un petit val qui mousse de rayons."],
-    ['Un soldat jeune, bouche ouverte, tête nue,', 'Et la nuque baignant dans le frais cresson bleu,'],
-    ["Dort ; il est étendu dans l'herbe, sous la nue,", 'Pâle dans son lit vert où la lumière pleut.'],
-    ['Les pieds dans les glaïeuls, il dort. Souriant comme', 'Sourirait un enfant malade, il fait un somme :'],
-    ['Nature, berce-le chaudement : il a froid.', 'Les parfums ne font pas frissonner sa narine ;'],
-    ['Il dort dans le soleil, la main sur sa poitrine', 'Tranquille. Il a deux trous rouges au côté droit.'],
+  const poemStrophes = [
+    [["C'est un trou de verdure où chante une rivière"], ['Accrochant follement aux herbes des haillons']],
+    [["D'argent ; où le soleil, de la montagne fière,"], ["Luit : c'est un petit val qui mousse de rayons."]],
+    [['Un soldat jeune, bouche ouverte, tête nue,'], ['Et la nuque baignant dans le frais cresson bleu,']],
+    [["Dort ; il est étendu dans l'herbe, sous la nue,"], ['Pâle dans son lit vert où la lumière pleut.']],
+    [['Les pieds dans les glaïeuls, il dort. Souriant comme'], ['Sourirait un enfant malade, il fait un somme :']],
+    [['Nature, berce-le chaudement : il a froid.'], ['Les parfums ne font pas frissonner sa narine ;']],
+    [['Il dort dans le soleil, la main sur sa poitrine'], ['Tranquille. Il a deux trous rouges au côté droit.']],
   ]
 
-  const togglePair = (index: number) => {
+  const toggleStrophe = (index: number) => {
     setVisibleStates((current) => current.map((state, i) => (i === index ? !state : state)))
   }
 
   return (
     <>
-      <Seo title={poemTitle} description={poemAuthor} isPoem={true} />{' '}
+      <Seo title={poemTitle} description={poemAuthor} isPoem={true} />
       <main>
-        <VStack spacing={8} px={4}>
+        {/* Ajustez VStack spacing pour l'espacement général */}
+        <VStack spacing={1} px={1}>
           <Box maxW="600px" w="100%">
-            <Box fontSize="xl" textAlign="left" display="flex" flexDirection="column" gap={3}>
-              {poemLines.map((pair, index) => (
+            {/* Ajustez le "gap" ici pour l'espace entre les strophes */}
+            <Box fontSize="xl" textAlign="left" display="flex" flexDirection="column" gap={1}>
+              {poemStrophes.map((strophe, index) => (
                 <Box
                   key={index}
-                  onClick={() => togglePair(index)}
+                  onClick={() => toggleStrophe(index)}
                   cursor="pointer"
                   _hover={{
                     bg: visibleStates[index] ? hoverVisibleBg : hoverHiddenBg,
@@ -47,52 +49,46 @@ export default function Poesie() {
                   display="block"
                   width="100%"
                   borderRadius="10px"
+                  // Vous pouvez aussi ajouter une marge en bas de chaque strophe
+                  mb={1}
                   style={{
                     border: !visibleStates[index] ? '1px solid #8c1c84' : 'none',
                     borderRadius: !visibleStates[index] ? '10px' : '10px',
-                    padding: !visibleStates[index] ? '10px' : '12px',
+                    // Ajustez le padding interne de chaque strophe
+                    padding: !visibleStates[index] ? '16px' : '18px',
                   }}>
-                  <Flex direction="column" lineHeight="2em">
-                    {visibleStates[index] ? (
-                      <>
-                        <Box
-                          style={{
-                            transition: 'none',
-                            opacity: 1,
-                          }}>
-                          {pair[0]}
-                        </Box>
-                        <Box
-                          style={{
-                            transition: 'none',
-                            opacity: 1,
-                          }}>
-                          {pair[1]}
-                        </Box>
-                      </>
-                    ) : (
-                      <>
-                        <Box
-                          style={{
-                            transition: 'opacity 0.5s ease-out',
-                            opacity: 0,
-                          }}>
-                          {pair[0]}
-                        </Box>
-                        <Box
-                          style={{
-                            transition: 'opacity 0.5s ease-out',
-                            opacity: 0,
-                          }}>
-                          {pair[1]}
-                        </Box>
-                      </>
-                    )}
+                  <Flex
+                    direction="column"
+                    // Ajustez l'espacement entre les lignes dans une strophe
+                    gap={2}
+                    // Ajustez la hauteur de ligne
+                    lineHeight="2.2em">
+                    {visibleStates[index]
+                      ? strophe.map((line, lineIndex) => (
+                          <Box
+                            key={lineIndex}
+                            style={{
+                              transition: 'none',
+                              opacity: 1,
+                            }}>
+                            {line}
+                          </Box>
+                        ))
+                      : strophe.map((line, lineIndex) => (
+                          <Box
+                            key={lineIndex}
+                            style={{
+                              transition: 'opacity 0.5s ease-out',
+                              opacity: 0,
+                            }}>
+                            {line}
+                          </Box>
+                        ))}
                   </Flex>
                 </Box>
               ))}
             </Box>
-            <Flex justify="flex-end" mt={6} mb={20}>
+            <Flex justify="flex-end" mt={10} mb={20}>
               <Text fontSize="md" color={'#45a2f8'}>
                 — {poemAuthor}, <i>{poemTitle}</i>, {poemDate}
               </Text>
