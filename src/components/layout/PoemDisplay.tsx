@@ -40,7 +40,7 @@ const PoemDisplay: React.FC<PoemDisplayProps> = ({ title, author, date, strophes
               mb={1}
               style={{
                 border: !visibleStates[pairIndexGlobal] ? '1px solid #8c1c84' : 'none',
-                padding: !visibleStates[pairIndexGlobal] ? '0 16px' : '0 18px', // Changed to only horizontal padding
+                padding: !visibleStates[pairIndexGlobal] ? '0 16px' : '0 18px',
               }}>
               <Flex direction="column" gap={2} lineHeight="2.2em">
                 {versePair.map((verse, index) => (
