@@ -32,6 +32,7 @@ export function Header(props: Props) {
               Page d&apos;accueil
             </MenuItem>
           </LinkComponent>
+
           <LinkComponent href="/rimbaud">
             <MenuItem fontSize="md" _hover={{ bg: menuHoverBg }}>
               Rimbaud
@@ -42,13 +43,18 @@ export function Header(props: Props) {
               Valéry
             </MenuItem>
           </LinkComponent>
+          <LinkComponent href="/lafontaine">
+            <MenuItem fontSize="md" _hover={{ bg: menuHoverBg }}>
+              La Fontaine
+            </MenuItem>
+          </LinkComponent>
         </MenuList>
       </Menu>
       <Flex alignItems="center" gap={4}>
         <Flex alignItems="center">
           <ThemeSwitcher />
           <Box mt={2} ml={4}>
-            <Link href="https://github.com/w3hc/parcoeur" isExternal>
+            <Link href="https://github.com/w3hc/parcoeur" isExternal aria-label="GitHub repository">
               <Icon as={FaGithub} boxSize={5} _hover={{ color: '#45a2f8' }} />
             </Link>
           </Box>
