@@ -27,12 +27,11 @@ export function Header(props: Props) {
       <Menu>
         <MenuButton as={IconButton} aria-label="Options" icon={<HamburgerIcon />} size={'sm'} mr={4} _hover={{ bg: menuHoverBg }} />
         <MenuList>
-          <LinkComponent href="/">
+          <LinkComponent href="/lafontaine">
             <MenuItem fontSize="md" _hover={{ bg: menuHoverBg }}>
-              Page d&apos;accueil
+              La Fontaine
             </MenuItem>
           </LinkComponent>
-
           <LinkComponent href="/rimbaud">
             <MenuItem fontSize="md" _hover={{ bg: menuHoverBg }}>
               Rimbaud
@@ -41,11 +40,6 @@ export function Header(props: Props) {
           <LinkComponent href="/valery">
             <MenuItem fontSize="md" _hover={{ bg: menuHoverBg }}>
               Valéry
-            </MenuItem>
-          </LinkComponent>
-          <LinkComponent href="/lafontaine">
-            <MenuItem fontSize="md" _hover={{ bg: menuHoverBg }}>
-              La Fontaine
             </MenuItem>
           </LinkComponent>
         </MenuList>
