@@ -1,17 +1,12 @@
-import { Text, VStack, Box, Flex, useColorModeValue } from '@chakra-ui/react'
 import { Seo } from '../../components/layout/Seo'
-import { useState } from 'react'
+import PoemDisplay from '../../components/layout/PoemDisplay'
 
 export default function Poesie() {
-  const [visibleStates, setVisibleStates] = useState(new Array(2).fill(true))
-
-  const hoverVisibleBg = useColorModeValue('rgba(69, 162, 248, 0.1)', 'rgba(69, 162, 248, 0.2)')
-  const hoverHiddenBg = useColorModeValue('rgba(69, 162, 248, 0.05)', 'rgba(69, 162, 248, 0.1)')
-
   const poemTitle = 'Le Lion et le Moucheron'
   const poemAuthor = 'Jean de La Fontaine'
   const poemDate = '1668'
 
+  // Keep original strophe structure
   const poemStrophes = [
     [
       '"Va-t\'en, chétif insecte, excrément de la terre! "',
@@ -58,70 +53,11 @@ export default function Poesie() {
     ],
   ]
 
-  const toggleStrophe = (index: number) => {
-    setVisibleStates((current) => current.map((state, i) => (i === index ? !state : state)))
-  }
-
   return (
     <>
       <Seo title={poemTitle} description={poemAuthor} isPoem={true} author={poemAuthor} poemFirstLine={poemStrophes[0][0]} />
       <main>
-        <VStack spacing={1} px={1}>
-          <Box maxW="600px" w="100%">
-            <Box fontSize="xl" textAlign="left" display="flex" flexDirection="column" gap={4}>
-              {poemStrophes.map((strophe, index) => (
-                <Box
-                  key={index}
-                  onClick={() => toggleStrophe(index)}
-                  cursor="pointer"
-                  _hover={{
-                    bg: visibleStates[index] ? hoverVisibleBg : hoverHiddenBg,
-                    border: '1px solid #8c1c84',
-                    borderRadius: '10px',
-                  }}
-                  transition="all 1s"
-                  display="block"
-                  width="100%"
-                  borderRadius="10px"
-                  mb={1}
-                  style={{
-                    border: !visibleStates[index] ? '1px solid #8c1c84' : 'none',
-                    borderRadius: !visibleStates[index] ? '10px' : '10px',
-                    padding: !visibleStates[index] ? '20px' : '22px',
-                  }}>
-                  <Flex direction="column" gap={3} lineHeight="2.2em">
-                    {visibleStates[index]
-                      ? strophe.map((line, lineIndex) => (
-                          <Box
-                            key={lineIndex}
-                            style={{
-                              transition: 'none',
-                              opacity: 1,
-                            }}>
-                            {line}
-                          </Box>
-                        ))
-                      : strophe.map((line, lineIndex) => (
-                          <Box
-                            key={lineIndex}
-                            style={{
-                              transition: 'opacity 0.8s ease-out',
-                              opacity: 0,
-                            }}>
-                            {line}
-                          </Box>
-                        ))}
-                  </Flex>
-                </Box>
-              ))}
-            </Box>
-            <Flex justify="flex-end" mt={10} mb={20}>
-              <Text fontSize="md" color={'#45a2f8'}>
-                — {poemAuthor}, <i>{poemTitle}</i>, {poemDate}
-              </Text>
-            </Flex>
-          </Box>
-        </VStack>
+        <PoemDisplay title={poemTitle} author={poemAuthor} date={poemDate} strophes={poemStrophes} />
       </main>
     </>
   )
