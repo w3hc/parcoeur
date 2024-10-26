@@ -6,12 +6,23 @@ interface Props {
   title?: string
   description?: string
   isPoem?: boolean
+  author?: string
+  poemFirstLine?: string
 }
 
-export function Seo({ title, description, isPoem }: Props = {}) {
+export function Seo({ title, description, isPoem, author, poemFirstLine }: Props = {}) {
   const origin = typeof window !== 'undefined' && window.location.origin ? window.location.origin : SITE_URL
-  const pageTitle = isPoem ? title : title ? `${title} | ${SITE_NAME}` : SITE_NAME
-  const pageDescription = description || SITE_DESCRIPTION
+
+  // Handle different page types
+  let pageTitle = title || SITE_NAME
+  let pageDescription = description || SITE_DESCRIPTION
+
+  if (isPoem && author) {
+    pageTitle = `${title} - ${author}`
+    pageDescription = poemFirstLine || `Un poème de ${author}`
+  } else if (!isPoem && title) {
+    pageTitle = `${title} | ${SITE_NAME}`
+  }
 
   return (
     <NextSeo
@@ -29,7 +40,7 @@ export function Seo({ title, description, isPoem }: Props = {}) {
             url: `${origin}/huangshan.png`,
             width: 1200,
             height: 630,
-            alt: `${SITE_NAME} Open Graph Image`,
+            alt: isPoem ? `${title} - Un poème de ${author}` : `${SITE_NAME} - ${pageDescription}`,
           },
         ],
       }}
@@ -42,6 +53,14 @@ export function Seo({ title, description, isPoem }: Props = {}) {
         {
           name: 'viewport',
           content: 'width=device-width, initial-scale=1',
+        },
+        {
+          name: 'og:type',
+          content: isPoem ? 'article' : 'website',
+        },
+        {
+          name: 'article:author',
+          content: author || '',
         },
       ]}
     />
