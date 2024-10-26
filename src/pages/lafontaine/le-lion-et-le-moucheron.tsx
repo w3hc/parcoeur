@@ -6,7 +6,6 @@ export default function Poesie() {
   const poemAuthor = 'Jean de La Fontaine'
   const poemDate = '1668'
 
-  // Keep original strophe structure
   const poemStrophes = [
     [
       '"Va-t\'en, chétif insecte, excrément de la terre! "',
