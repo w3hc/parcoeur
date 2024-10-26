@@ -1,13 +1,7 @@
-import { Text, VStack, Box, Flex, useColorModeValue } from '@chakra-ui/react'
 import { Seo } from '../../components/layout/Seo'
-import { useState } from 'react'
+import PoemDisplay from '../../components/layout/PoemDisplay'
 
 export default function Poesie() {
-  const [visibleStates, setVisibleStates] = useState(new Array(8).fill(true))
-
-  const hoverVisibleBg = useColorModeValue('rgba(69, 162, 248, 0.1)', 'rgba(69, 162, 248, 0.2)')
-  const hoverHiddenBg = useColorModeValue('rgba(69, 162, 248, 0.05)', 'rgba(69, 162, 248, 0.1)')
-
   const poemTitle = 'Le Cimetière marin'
   const poemAuthor = 'Paul Valéry'
   const poemDate = '1920'
@@ -79,82 +73,11 @@ export default function Poesie() {
     ],
   ]
 
-  const toggleStrophe = (index: number) => {
-    setVisibleStates((current) => current.map((state, i) => (i === index ? !state : state)))
-  }
-
   return (
     <>
-      <Seo title={poemTitle} description={poemAuthor} isPoem={true} />
+      <Seo title={poemTitle} description={poemAuthor} isPoem={true} author={poemAuthor} poemFirstLine={poemStrophes[0][0]} />
       <main>
-        {/* Ajustez VStack spacing pour l'espacement général */}
-        <VStack spacing={1} px={1}>
-          <Box maxW="600px" w="100%">
-            {/* Ajustez le "gap" ici pour l'espace entre les strophes */}
-            <Box fontSize="xl" textAlign="left" display="flex" flexDirection="column" gap={4}>
-              {poemStrophes.map((strophe, index) => (
-                <Box
-                  key={index}
-                  onClick={() => toggleStrophe(index)}
-                  cursor="pointer"
-                  _hover={{
-                    bg: visibleStates[index] ? hoverVisibleBg : hoverHiddenBg,
-                    border: '1px solid #8c1c84',
-                    borderRadius: '10px',
-                  }}
-                  transition="all 1s"
-                  display="block"
-                  width="100%"
-                  borderRadius="10px"
-                  // Marge en bas de chaque strophe
-                  mb={1}
-                  style={{
-                    border: !visibleStates[index] ? '1px solid #8c1c84' : 'none',
-                    borderRadius: !visibleStates[index] ? '10px' : '10px',
-                    // Padding interne plus grand pour les strophes de 6 vers
-                    padding: !visibleStates[index] ? '20px' : '22px',
-                  }}>
-                  <Flex
-                    direction="column"
-                    // Espacement entre les lignes dans une strophe
-                    gap={3}
-                    // Hauteur de ligne ajustée
-                    lineHeight="2.2em">
-                    {visibleStates[index]
-                      ? strophe.map((line, lineIndex) => (
-                          <Box
-                            key={lineIndex}
-                            style={{
-                              transition: 'none',
-                              opacity: 1,
-                              // Ajoute un petit retrait pour la dernière ligne de chaque strophe
-                              // marginLeft: lineIndex === 5 ? '1em' : '0',
-                            }}>
-                            {line}
-                          </Box>
-                        ))
-                      : strophe.map((line, lineIndex) => (
-                          <Box
-                            key={lineIndex}
-                            style={{
-                              transition: 'opacity 0.8s ease-out',
-                              opacity: 0,
-                              // marginLeft: lineIndex === 5 ? '1em' : '0',
-                            }}>
-                            {line}
-                          </Box>
-                        ))}
-                  </Flex>
-                </Box>
-              ))}
-            </Box>
-            <Flex justify="flex-end" mt={10} mb={20}>
-              <Text fontSize="md" color={'#45a2f8'}>
-                — {poemAuthor}, <i>{poemTitle}</i>, {poemDate}
-              </Text>
-            </Flex>
-          </Box>
-        </VStack>
+        <PoemDisplay title={poemTitle} author={poemAuthor} date={poemDate} strophes={poemStrophes} />
       </main>
     </>
   )
