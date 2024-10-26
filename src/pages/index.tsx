@@ -2,7 +2,7 @@ import React from 'react'
 import { VStack, Box, Text, List, ListItem, useColorModeValue } from '@chakra-ui/react'
 import { LinkComponent } from '../components/layout/LinkComponent'
 import { NextSeo } from 'next-seo'
-import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from '../utils/config'
+import { SITE_URL } from '../utils/config'
 
 const poets = [
   {
@@ -25,31 +25,34 @@ const poets = [
 export default function Home() {
   const hoverBg = useColorModeValue('rgba(69, 162, 248, 0.1)', 'rgba(69, 162, 248, 0.2)')
 
+  const seoTitle = 'Par coeur - Poèmes classiques français'
+  const seoDescription = 'Apprenez par coeur quelques beaux poèmes de La Fontaine, Rimbaud et Valéry'
+
   return (
     <>
       <NextSeo
-        title={SITE_NAME}
+        title={seoTitle}
         titleTemplate="%s"
-        description={`${SITE_DESCRIPTION}`}
+        description={seoDescription}
         canonical={SITE_URL}
         openGraph={{
           type: 'website',
           url: SITE_URL,
-          title: SITE_NAME,
-          description: SITE_DESCRIPTION,
-          siteName: SITE_NAME,
+          title: seoTitle,
+          description: seoDescription,
+          site_name: 'Par coeur',
           images: [
             {
               url: `${SITE_URL}/huangshan.png`,
               width: 1200,
               height: 630,
-              alt: SITE_NAME,
+              alt: 'Par coeur - Poésie française classique',
             },
           ],
         }}
         twitter={{
           cardType: 'summary_large_image',
-          site: SITE_URL,
+          site: '@w3hc8',
         }}
         additionalMetaTags={[
           {

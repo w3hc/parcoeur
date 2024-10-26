@@ -19,36 +19,39 @@ export default function LaFontaine() {
   const hoverBg = useColorModeValue('rgba(69, 162, 248, 0.1)', 'rgba(69, 162, 248, 0.2)')
   const dateColor = useColorModeValue('rgba(69, 162, 248, 0.7)', 'rgba(69, 162, 248, 0.5)')
 
-  // SEO constants
-  const authorName = 'Jean de La Fontaine'
-  const description = 'Découvrez quelques beaux poèmes de Jean de La Fontaine.'
-  const canonicalUrl = `${SITE_URL}/lafontaine`
+  const seoTitle = 'Jean de La Fontaine - Fables et Poèmes'
+  const seoDescription = 'Quelques belles fables de La Fontaine : Le Lion et le moucheron et autres fables'
 
   return (
     <>
       <NextSeo
-        title={authorName}
-        description={description}
-        canonical={canonicalUrl}
+        title={seoTitle}
+        description={seoDescription}
+        canonical={`${SITE_URL}/lafontaine`}
         openGraph={{
-          title: authorName,
-          description: description,
-          url: canonicalUrl,
+          title: seoTitle,
+          description: seoDescription,
+          url: `${SITE_URL}/lafontaine`,
           type: 'profile',
           profile: {
             firstName: 'Jean',
             lastName: 'de La Fontaine',
           },
+          site_name: 'Par coeur',
           images: [
             {
               url: `${SITE_URL}/huangshan.png`,
               width: 1200,
               height: 630,
-              alt: authorName,
+              alt: 'Jean de La Fontaine - Fables célèbres',
             },
           ],
         }}
-      />{' '}
+        twitter={{
+          cardType: 'summary_large_image',
+          site: '@w3hc8',
+        }}
+      />
       <VStack spacing={8} align="stretch">
         <HeadingComponent as="h1">Jean de La Fontaine</HeadingComponent>
         <List spacing={4}>

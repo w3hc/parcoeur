@@ -19,37 +19,39 @@ export default function Rimbaud() {
   const hoverBg = useColorModeValue('rgba(69, 162, 248, 0.1)', 'rgba(69, 162, 248, 0.2)')
   const dateColor = useColorModeValue('rgba(69, 162, 248, 0.7)', 'rgba(69, 162, 248, 0.5)')
 
-  // SEO constants
-  const authorName = 'Arthur Rimbaud'
-  const description = "Découvrez quelques beaux poèmes d'Arthur Rimbaud."
-  const canonicalUrl = `${SITE_URL}/rimbaud`
+  const seoTitle = 'Arthur Rimbaud - Quelques beau poèmes'
+  const seoDescription = 'Quelques beaux poèmes de Rimbaud : Le Dormeur du val et autres œuvres majeures'
 
   return (
     <>
       <NextSeo
-        title={authorName}
-        description={description}
-        canonical={canonicalUrl}
+        title={seoTitle}
+        description={seoDescription}
+        canonical={`${SITE_URL}/rimbaud`}
         openGraph={{
-          title: authorName,
-          description: description,
-          url: canonicalUrl,
+          title: seoTitle,
+          description: seoDescription,
+          url: `${SITE_URL}/rimbaud`,
           type: 'profile',
           profile: {
             firstName: 'Arthur',
             lastName: 'Rimbaud',
           },
+          site_name: 'Par coeur',
           images: [
             {
               url: `${SITE_URL}/huangshan.png`,
               width: 1200,
               height: 630,
-              alt: authorName,
+              alt: 'Arthur Rimbaud - Poèmes symbolistes',
             },
           ],
         }}
+        twitter={{
+          cardType: 'summary_large_image',
+          site: '@w3hc8',
+        }}
       />
-
       <VStack spacing={8} align="stretch">
         <HeadingComponent as="h1">Arthur Rimbaud</HeadingComponent>
         <List spacing={4}>
