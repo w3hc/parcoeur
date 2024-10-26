@@ -1,7 +1,8 @@
-import { Seo } from '../../components/layout/Seo'
+import { NextSeo } from 'next-seo'
 import PoemDisplay from '../../components/layout/PoemDisplay'
+import { SITE_URL } from '../../utils/config'
 
-export default function Poesie() {
+export default function DormeurDuVal() {
   const poemTitle = 'Le Dormeur du val'
   const poemAuthor = 'Arthur Rimbaud'
   const poemDate = 'Octobre 1870'
@@ -28,9 +29,40 @@ export default function Poesie() {
     ['Il dort dans le soleil, la main sur sa poitrine', 'Tranquille. Il a deux trous rouges au côté droit.'],
   ]
 
+  const fullTitle = `${poemTitle} - ${poemAuthor}`
+  const fullDescription = `${poemStrophes[0][0]} | Un poème de ${poemAuthor}, ${poemDate}`
+  const canonicalUrl = `${SITE_URL}/rimbaud/le-dormeur-du-val`
+
   return (
     <>
-      <Seo title={poemTitle} description={poemAuthor} isPoem={true} author={poemAuthor} poemFirstLine={poemStrophes[0][0]} />
+      <NextSeo
+        title={fullTitle}
+        titleTemplate={`%s`} // Override default template for poem pages
+        description={fullDescription}
+        canonical={canonicalUrl}
+        openGraph={{
+          title: fullTitle,
+          description: fullDescription,
+          url: canonicalUrl,
+          type: 'article',
+          article: {
+            authors: [poemAuthor],
+            publishedTime: '1870-10-01',
+            tags: ['poésie', 'poème', 'littérature française', 'Rimbaud'],
+          },
+          images: [
+            {
+              url: `${SITE_URL}/huangshan.png`,
+              width: 1200,
+              height: 630,
+              alt: fullTitle,
+            },
+          ],
+        }}
+        twitter={{
+          cardType: 'summary_large_image',
+        }}
+      />
       <main>
         <PoemDisplay title={poemTitle} author={poemAuthor} date={poemDate} strophes={poemStrophes} />
       </main>
