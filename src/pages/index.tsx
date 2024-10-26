@@ -1,7 +1,8 @@
 import React from 'react'
 import { VStack, Box, Text, List, ListItem, useColorModeValue } from '@chakra-ui/react'
 import { LinkComponent } from '../components/layout/LinkComponent'
-import { Seo } from '../components/layout/Seo'
+import { NextSeo } from 'next-seo'
+import { SITE_NAME, SITE_DESCRIPTION, SITE_URL } from '../utils/config'
 
 const poets = [
   {
@@ -26,7 +27,41 @@ export default function Home() {
 
   return (
     <>
-      <Seo />
+      <NextSeo
+        title={SITE_NAME}
+        titleTemplate="%s"
+        description={`${SITE_DESCRIPTION}`}
+        canonical={SITE_URL}
+        openGraph={{
+          type: 'website',
+          url: SITE_URL,
+          title: SITE_NAME,
+          description: SITE_DESCRIPTION,
+          siteName: SITE_NAME,
+          images: [
+            {
+              url: `${SITE_URL}/huangshan.png`,
+              width: 1200,
+              height: 630,
+              alt: SITE_NAME,
+            },
+          ],
+        }}
+        twitter={{
+          cardType: 'summary_large_image',
+          site: SITE_URL,
+        }}
+        additionalMetaTags={[
+          {
+            name: 'keywords',
+            content: 'poésie, poèmes, littérature française, La Fontaine, Rimbaud, Valéry, apprendre par coeur',
+          },
+          {
+            name: 'author',
+            content: 'WH3C',
+          },
+        ]}
+      />
       <VStack spacing={8} align="stretch">
         <List spacing={4}>
           {poets.map((poet) => (

@@ -1,7 +1,8 @@
-import { Seo } from '../../components/layout/Seo'
+import { NextSeo } from 'next-seo'
 import PoemDisplay from '../../components/layout/PoemDisplay'
+import { SITE_URL } from '../../utils/config'
 
-export default function Poesie() {
+export default function LionEtMoucheron() {
   const poemTitle = 'Le Lion et le Moucheron'
   const poemAuthor = 'Jean de La Fontaine'
   const poemDate = '1668'
@@ -52,9 +53,40 @@ export default function Poesie() {
     ],
   ]
 
+  const fullTitle = `${poemTitle} - ${poemAuthor}`
+  const fullDescription = `${poemStrophes[0][0]} | Un poème de ${poemAuthor}, ${poemDate}`
+  const canonicalUrl = `${SITE_URL}/lafontaine/le-lion-et-le-moucheron`
+
   return (
     <>
-      <Seo title={poemTitle} description={poemAuthor} isPoem={true} author={poemAuthor} poemFirstLine={poemStrophes[0][0]} />
+      <NextSeo
+        title={fullTitle}
+        titleTemplate={`%s`}
+        description={fullDescription}
+        canonical={canonicalUrl}
+        openGraph={{
+          title: fullTitle,
+          description: fullDescription,
+          url: canonicalUrl,
+          type: 'article',
+          article: {
+            authors: [poemAuthor],
+            publishedTime: '1668-01-01',
+            tags: ['poésie', 'poème', 'littérature française', 'La Fontaine', 'fables'],
+          },
+          images: [
+            {
+              url: `${SITE_URL}/huangshan.png`,
+              width: 1200,
+              height: 630,
+              alt: fullTitle,
+            },
+          ],
+        }}
+        twitter={{
+          cardType: 'summary_large_image',
+        }}
+      />
       <main>
         <PoemDisplay title={poemTitle} author={poemAuthor} date={poemDate} strophes={poemStrophes} />
       </main>

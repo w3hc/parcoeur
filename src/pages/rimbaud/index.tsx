@@ -1,8 +1,9 @@
 import React from 'react'
 import { VStack, Box, Text, List, ListItem, useColorModeValue } from '@chakra-ui/react'
 import { LinkComponent } from '../../components/layout/LinkComponent'
-import { Seo } from '../../components/layout/Seo'
 import { HeadingComponent } from '../../components/layout/HeadingComponent'
+import { NextSeo } from 'next-seo'
+import { SITE_URL } from '../../utils/config'
 
 const poems = [
   {
@@ -18,14 +19,39 @@ export default function Rimbaud() {
   const hoverBg = useColorModeValue('rgba(69, 162, 248, 0.1)', 'rgba(69, 162, 248, 0.2)')
   const dateColor = useColorModeValue('rgba(69, 162, 248, 0.7)', 'rgba(69, 162, 248, 0.5)')
 
+  // SEO constants
+  const authorName = 'Arthur Rimbaud'
+  const description = "Découvrez quelques beaux poèmes d'Arthur Rimbaud."
+  const canonicalUrl = `${SITE_URL}/rimbaud`
+
   return (
     <>
-      <Seo title="Arthur Rimbaud" description="Poèmes d'Arthur Rimbaud" />
+      <NextSeo
+        title={authorName}
+        description={description}
+        canonical={canonicalUrl}
+        openGraph={{
+          title: authorName,
+          description: description,
+          url: canonicalUrl,
+          type: 'profile',
+          profile: {
+            firstName: 'Arthur',
+            lastName: 'Rimbaud',
+          },
+          images: [
+            {
+              url: `${SITE_URL}/huangshan.png`,
+              width: 1200,
+              height: 630,
+              alt: authorName,
+            },
+          ],
+        }}
+      />
+
       <VStack spacing={8} align="stretch">
         <HeadingComponent as="h1">Arthur Rimbaud</HeadingComponent>
-        {/* <Text fontSize="lg" color={descriptionColor} mb={6}>
-          Jean Nicolas Arthur Rimbaud (1854-1891) fut un poète français majeur du XIXe siècle.
-        </Text> */}
         <List spacing={4}>
           {poems.map((poem) => (
             <ListItem

@@ -1,8 +1,9 @@
 import React from 'react'
 import { VStack, Box, Text, List, ListItem, useColorModeValue } from '@chakra-ui/react'
 import { LinkComponent } from '../../components/layout/LinkComponent'
-import { Seo } from '../../components/layout/Seo'
 import { HeadingComponent } from '../../components/layout/HeadingComponent'
+import { NextSeo } from 'next-seo'
+import { SITE_URL } from '../../utils/config'
 
 const poems = [
   {
@@ -18,9 +19,36 @@ export default function Valery() {
   const hoverBg = useColorModeValue('rgba(69, 162, 248, 0.1)', 'rgba(69, 162, 248, 0.2)')
   const dateColor = useColorModeValue('rgba(69, 162, 248, 0.7)', 'rgba(69, 162, 248, 0.5)')
 
+  // SEO constants
+  const authorName = 'Paul Valéry'
+  const description = 'Découvrez quelques beaux poèmes de Paul Valéry.'
+  const canonicalUrl = `${SITE_URL}/valery`
+
   return (
     <>
-      <Seo title="Paul Valéry" description="Poèmes de Paul Valéry" />
+      <NextSeo
+        title={authorName}
+        description={description}
+        canonical={canonicalUrl}
+        openGraph={{
+          title: authorName,
+          description: description,
+          url: canonicalUrl,
+          type: 'profile',
+          profile: {
+            firstName: 'Paul',
+            lastName: 'Valéry',
+          },
+          images: [
+            {
+              url: `${SITE_URL}/huangshan.png`,
+              width: 1200,
+              height: 630,
+              alt: authorName,
+            },
+          ],
+        }}
+      />{' '}
       <VStack spacing={8} align="stretch">
         <HeadingComponent as="h1">Paul Valéry</HeadingComponent>
         <List spacing={4}>
