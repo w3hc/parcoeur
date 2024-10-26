@@ -5,6 +5,11 @@ import { Seo } from '../components/layout/Seo'
 
 const poets = [
   {
+    name: 'Jean de La Fontaine',
+    path: '/lafontaine',
+    description: '1621-1695',
+  },
+  {
     name: 'Arthur Rimbaud',
     path: '/rimbaud',
     description: '1854-1891',

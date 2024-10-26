@@ -32,6 +32,11 @@ export function Header(props: Props) {
               Page d&apos;accueil
             </MenuItem>
           </LinkComponent>
+          <LinkComponent href="/lafontaine">
+            <MenuItem fontSize="md" _hover={{ bg: menuHoverBg }}>
+              La Fontaine
+            </MenuItem>
+          </LinkComponent>
           <LinkComponent href="/rimbaud">
             <MenuItem fontSize="md" _hover={{ bg: menuHoverBg }}>
               Rimbaud
