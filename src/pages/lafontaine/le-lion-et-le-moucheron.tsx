@@ -53,38 +53,38 @@ export default function LionEtMoucheron() {
     ],
   ]
 
-  const fullTitle = `${poemTitle} - ${poemAuthor}`
-  const fullDescription = `${poemStrophes[0][0]} | Un poème de ${poemAuthor}, ${poemDate}`
-  const canonicalUrl = `${SITE_URL}/lafontaine/le-lion-et-le-moucheron`
+  const seoTitle = 'Le Lion et le moucheron - La Fontaine'
+  const seoDescription = "Va-t'en, chétif insecte, excrément de la terre! C'est en ces mots..."
 
   return (
     <>
       <NextSeo
-        title={fullTitle}
-        titleTemplate={`%s`}
-        description={fullDescription}
-        canonical={canonicalUrl}
+        title={seoTitle}
+        description={seoDescription}
+        canonical={`${SITE_URL}/lafontaine/le-lion-et-le-moucheron`}
         openGraph={{
-          title: fullTitle,
-          description: fullDescription,
-          url: canonicalUrl,
+          title: seoTitle,
+          description: seoDescription,
+          url: `${SITE_URL}/lafontaine/le-lion-et-le-moucheron`,
           type: 'article',
           article: {
-            authors: [poemAuthor],
+            authors: ['Jean de La Fontaine'],
             publishedTime: '1668-01-01',
-            tags: ['poésie', 'poème', 'littérature française', 'La Fontaine', 'fables'],
+            tags: ['poésie', 'fable', 'La Fontaine'],
           },
+          site_name: 'Par coeur',
           images: [
             {
               url: `${SITE_URL}/huangshan.png`,
               width: 1200,
               height: 630,
-              alt: fullTitle,
+              alt: 'Le Lion et le Moucheron - Fable de La Fontaine',
             },
           ],
         }}
         twitter={{
           cardType: 'summary_large_image',
+          site: '@w3hc8',
         }}
       />
       <main>

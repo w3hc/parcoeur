@@ -19,36 +19,39 @@ export default function Valery() {
   const hoverBg = useColorModeValue('rgba(69, 162, 248, 0.1)', 'rgba(69, 162, 248, 0.2)')
   const dateColor = useColorModeValue('rgba(69, 162, 248, 0.7)', 'rgba(69, 162, 248, 0.5)')
 
-  // SEO constants
-  const authorName = 'Paul Valéry'
-  const description = 'Découvrez quelques beaux poèmes de Paul Valéry.'
-  const canonicalUrl = `${SITE_URL}/valery`
+  const seoTitle = 'Paul Valéry - Poèmes Symbolistes'
+  const seoDescription = "Quelques beaux poèmes de Valéry : Le Cimetière marin et autres chefs-d'œuvre"
 
   return (
     <>
       <NextSeo
-        title={authorName}
-        description={description}
-        canonical={canonicalUrl}
+        title={seoTitle}
+        description={seoDescription}
+        canonical={`${SITE_URL}/valery`}
         openGraph={{
-          title: authorName,
-          description: description,
-          url: canonicalUrl,
+          title: seoTitle,
+          description: seoDescription,
+          url: `${SITE_URL}/valery`,
           type: 'profile',
           profile: {
             firstName: 'Paul',
             lastName: 'Valéry',
           },
+          site_name: 'Par coeur',
           images: [
             {
               url: `${SITE_URL}/huangshan.png`,
               width: 1200,
               height: 630,
-              alt: authorName,
+              alt: 'Paul Valéry - Poésie symboliste',
             },
           ],
         }}
-      />{' '}
+        twitter={{
+          cardType: 'summary_large_image',
+          site: '@w3hc8',
+        }}
+      />
       <VStack spacing={8} align="stretch">
         <HeadingComponent as="h1">Paul Valéry</HeadingComponent>
         <List spacing={4}>

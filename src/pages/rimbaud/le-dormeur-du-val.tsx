@@ -29,38 +29,38 @@ export default function DormeurDuVal() {
     ['Il dort dans le soleil, la main sur sa poitrine', 'Tranquille. Il a deux trous rouges au côté droit.'],
   ]
 
-  const fullTitle = `${poemTitle} - ${poemAuthor}`
-  const fullDescription = `${poemStrophes[0][0]} | Un poème de ${poemAuthor}, ${poemDate}`
-  const canonicalUrl = `${SITE_URL}/rimbaud/le-dormeur-du-val`
+  const seoTitle = 'Le Dormeur du val - Arthur Rimbaud'
+  const seoDescription = "C'est un trou de verdure où chante une rivière - Accrochant follement aux herbes des haillons..."
 
   return (
     <>
       <NextSeo
-        title={fullTitle}
-        titleTemplate={`%s`} // Override default template for poem pages
-        description={fullDescription}
-        canonical={canonicalUrl}
+        title={seoTitle}
+        description={seoDescription}
+        canonical={`${SITE_URL}/rimbaud/le-dormeur-du-val`}
         openGraph={{
-          title: fullTitle,
-          description: fullDescription,
-          url: canonicalUrl,
+          title: seoTitle,
+          description: seoDescription,
+          url: `${SITE_URL}/rimbaud/le-dormeur-du-val`,
           type: 'article',
           article: {
-            authors: [poemAuthor],
+            authors: ['Arthur Rimbaud'],
             publishedTime: '1870-10-01',
-            tags: ['poésie', 'poème', 'littérature française', 'Rimbaud'],
+            tags: ['poésie', 'poème', 'Rimbaud', 'symbolisme'],
           },
+          site_name: 'Par coeur',
           images: [
             {
               url: `${SITE_URL}/huangshan.png`,
               width: 1200,
               height: 630,
-              alt: fullTitle,
+              alt: 'Le Dormeur du val - Poème de Rimbaud',
             },
           ],
         }}
         twitter={{
           cardType: 'summary_large_image',
+          site: '@w3hc8',
         }}
       />
       <main>

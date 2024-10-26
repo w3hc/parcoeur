@@ -74,40 +74,40 @@ export default function CimetiereMarin() {
     ],
   ]
 
-  const fullTitle = `${poemTitle} - ${poemAuthor}`
-  const fullDescription = `${poemStrophes[0][0]} | Un poème de ${poemAuthor}, ${poemDate}`
-  const canonicalUrl = `${SITE_URL}/valery/le-cimetiere-marin`
+  const seoTitle = 'Le Cimetière marin - Paul Valéry'
+  const seoDescription = 'Ce toit tranquille, où marchent des colombes - Entre les pins palpite, entre les tombes...'
 
   return (
     <>
       <NextSeo
-        title={fullTitle}
-        titleTemplate={`%s`}
-        description={fullDescription}
-        canonical={canonicalUrl}
+        title={seoTitle}
+        description={seoDescription}
+        canonical={`${SITE_URL}/valery/le-cimetiere-marin`}
         openGraph={{
-          title: fullTitle,
-          description: fullDescription,
-          url: canonicalUrl,
+          title: seoTitle,
+          description: seoDescription,
+          url: `${SITE_URL}/valery/le-cimetiere-marin`,
           type: 'article',
           article: {
-            authors: [poemAuthor],
+            authors: ['Paul Valéry'],
             publishedTime: '1920-01-01',
-            tags: ['poésie', 'poème', 'littérature française', 'Valéry'],
+            tags: ['poésie', 'poème', 'Valéry', 'symbolisme'],
           },
+          site_name: 'Par coeur',
           images: [
             {
               url: `${SITE_URL}/huangshan.png`,
               width: 1200,
               height: 630,
-              alt: fullTitle,
+              alt: 'Le Cimetière marin - Poème de Valéry',
             },
           ],
         }}
         twitter={{
           cardType: 'summary_large_image',
+          site: '@w3hc8',
         }}
-      />{' '}
+      />
       <main>
         <PoemDisplay title={poemTitle} author={poemAuthor} date={poemDate} strophes={poemStrophes} />
       </main>
