@@ -1,11 +1,15 @@
 import { NextSeo } from 'next-seo'
-import PoemDisplay from '../../components/layout/PoemDisplay'
+import PoemDisplay, { PoemDisplayRef } from '../../components/layout/PoemDisplay'
 import { SITE_URL } from '../../utils/config'
+import { useRef, useEffect } from 'react'
+import { usePoemContext } from '../../components/layout/PoemContext'
 
 export default function DormeurDuVal() {
   const poemTitle = 'Le Dormeur du val'
   const poemAuthor = 'Arthur Rimbaud'
   const poemDate = 'Octobre 1870'
+  const poemRef = useRef<PoemDisplayRef>(null)
+  const { setToggleFunction, setAllStrophesVisible } = usePoemContext()
 
   const poemStrophes = [
     [
@@ -28,6 +32,27 @@ export default function DormeurDuVal() {
     ],
     ['Il dort dans le soleil, la main sur sa poitrine', 'Tranquille. Il a deux trous rouges au côté droit.'],
   ]
+
+  const handleToggleAllStrophes = () => {
+    if (poemRef.current) {
+      poemRef.current.toggleAllStrophes()
+      // Update the context state to reflect the current visibility
+      setAllStrophesVisible(poemRef.current.getAllStrophesVisible())
+    }
+  }
+
+  // Set up the toggle function and initial state when component mounts
+  useEffect(() => {
+    setToggleFunction(handleToggleAllStrophes)
+    if (poemRef.current) {
+      setAllStrophesVisible(poemRef.current.getAllStrophesVisible())
+    }
+
+    // Clean up when component unmounts
+    return () => {
+      setToggleFunction(null)
+    }
+  }, [])
 
   const seoTitle = 'Le Dormeur du val - Arthur Rimbaud'
   const seoDescription = "C'est un trou de verdure où chante une rivière - Accrochant follement aux herbes des haillons..."
@@ -64,7 +89,7 @@ export default function DormeurDuVal() {
         }}
       />
       <main>
-        <PoemDisplay title={poemTitle} author={poemAuthor} date={poemDate} strophes={poemStrophes} />
+        <PoemDisplay ref={poemRef} title={poemTitle} author={poemAuthor} date={poemDate} strophes={poemStrophes} />
       </main>
     </>
   )

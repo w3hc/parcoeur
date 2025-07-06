@@ -1,11 +1,15 @@
 import { NextSeo } from 'next-seo'
-import PoemDisplay from '../../components/layout/PoemDisplay'
+import PoemDisplay, { PoemDisplayRef } from '../../components/layout/PoemDisplay'
 import { SITE_URL } from '../../utils/config'
+import { useRef, useEffect } from 'react'
+import { usePoemContext } from '../../components/layout/PoemContext'
 
 export default function CimetiereMarin() {
   const poemTitle = 'Le Cimetière marin'
   const poemAuthor = 'Paul Valéry'
   const poemDate = '1920'
+  const poemRef = useRef<PoemDisplayRef>(null)
+  const { setToggleFunction, setAllStrophesVisible } = usePoemContext()
 
   const poemStrophes = [
     [
@@ -74,6 +78,27 @@ export default function CimetiereMarin() {
     ],
   ]
 
+  const handleToggleAllStrophes = () => {
+    if (poemRef.current) {
+      poemRef.current.toggleAllStrophes()
+      // Update the context state to reflect the current visibility
+      setAllStrophesVisible(poemRef.current.getAllStrophesVisible())
+    }
+  }
+
+  // Set up the toggle function and initial state when component mounts
+  useEffect(() => {
+    setToggleFunction(handleToggleAllStrophes)
+    if (poemRef.current) {
+      setAllStrophesVisible(poemRef.current.getAllStrophesVisible())
+    }
+
+    // Clean up when component unmounts
+    return () => {
+      setToggleFunction(null)
+    }
+  }, [])
+
   const seoTitle = 'Le Cimetière marin - Paul Valéry'
   const seoDescription = 'Ce toit tranquille, où marchent des colombes - Entre les pins palpite, entre les tombes...'
 
@@ -109,7 +134,7 @@ export default function CimetiereMarin() {
         }}
       />
       <main>
-        <PoemDisplay title={poemTitle} author={poemAuthor} date={poemDate} strophes={poemStrophes} />
+        <PoemDisplay ref={poemRef} title={poemTitle} author={poemAuthor} date={poemDate} strophes={poemStrophes} />
       </main>
     </>
   )

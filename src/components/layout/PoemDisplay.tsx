@@ -1,5 +1,5 @@
 import { Text, VStack, Box, Flex, useColorModeValue } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useState, useImperativeHandle, forwardRef } from 'react'
 
 interface PoemDisplayProps {
   title: string
@@ -9,13 +9,27 @@ interface PoemDisplayProps {
   isChinese?: boolean
 }
 
-const PoemDisplay: React.FC<PoemDisplayProps> = ({ title, author, date, strophes, isChinese = false }) => {
+export interface PoemDisplayRef {
+  toggleAllStrophes: () => void
+  getAllStrophesVisible: () => boolean
+}
+
+const PoemDisplay = forwardRef<PoemDisplayRef, PoemDisplayProps>(({ title, author, date, strophes, isChinese = false }, ref) => {
   const getAllVerses = strophes.flat()
   const numPairs = Math.ceil(getAllVerses.length / 2)
   const [visibleStates, setVisibleStates] = useState(new Array(numPairs).fill(true))
 
   const hoverVisibleBg = useColorModeValue('rgba(69, 162, 248, 0.1)', 'rgba(69, 162, 248, 0.2)')
   const hoverHiddenBg = useColorModeValue('rgba(69, 162, 248, 0.05)', 'rgba(69, 162, 248, 0.1)')
+
+  // Expose methods to parent component
+  useImperativeHandle(ref, () => ({
+    toggleAllStrophes: () => {
+      const allVisible = visibleStates.every((state) => state)
+      setVisibleStates(new Array(numPairs).fill(!allVisible))
+    },
+    getAllStrophesVisible: () => visibleStates.every((state) => state),
+  }))
 
   // Helper function to detect if text contains Chinese characters
   const containsChinese = (text: string) => {
@@ -58,14 +72,10 @@ const PoemDisplay: React.FC<PoemDisplayProps> = ({ title, author, date, strophes
                     }}>
                     <Text
                       fontSize={
-                        isChinese
-                          ? containsChinese(verse)
-                            ? '2xl'
-                            : 'sm' // Large for Chinese, small for pinyin
-                          : 'xl' // Default for French poems
+                        isChinese ? (containsChinese(verse) ? '2xl' : 'md') : 'xl' // Default for French poems
                       }
                       fontWeight={isChinese && containsChinese(verse) ? 'medium' : 'normal'}
-                      color={isChinese && !containsChinese(verse) ? 'gray.500' : 'inherit'}
+                      color={isChinese && !containsChinese(verse) ? '#45a2f8' : 'inherit'} // Changed from 'gray.500' to blue
                       fontFamily={isChinese && containsChinese(verse) ? "'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', sans-serif" : 'inherit'}>
                       {verse}
                     </Text>
@@ -94,13 +104,15 @@ const PoemDisplay: React.FC<PoemDisplayProps> = ({ title, author, date, strophes
           {renderVersePairs()}
         </Box>
         <Flex justify="flex-end" mt={10} mb={20}>
-          <Text fontSize="md" color={'#45a2f8'}>
+          <Text fontSize="md" color={isChinese ? 'white' : '#45a2f8'}>
             — {author}, <i>{title}</i>, {date}
           </Text>
         </Flex>
       </Box>
     </VStack>
   )
-}
+})
+
+PoemDisplay.displayName = 'PoemDisplay'
 
 export default PoemDisplay

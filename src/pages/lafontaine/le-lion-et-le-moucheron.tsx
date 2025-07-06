@@ -1,11 +1,15 @@
 import { NextSeo } from 'next-seo'
-import PoemDisplay from '../../components/layout/PoemDisplay'
+import PoemDisplay, { PoemDisplayRef } from '../../components/layout/PoemDisplay'
 import { SITE_URL } from '../../utils/config'
+import { useRef, useEffect } from 'react'
+import { usePoemContext } from '../../components/layout/PoemContext'
 
 export default function LionEtMoucheron() {
   const poemTitle = 'Le Lion et le Moucheron'
   const poemAuthor = 'Jean de La Fontaine'
   const poemDate = '1668'
+  const poemRef = useRef<PoemDisplayRef>(null)
+  const { setToggleFunction, setAllStrophesVisible } = usePoemContext()
 
   const poemStrophes = [
     [
@@ -53,6 +57,27 @@ export default function LionEtMoucheron() {
     ],
   ]
 
+  const handleToggleAllStrophes = () => {
+    if (poemRef.current) {
+      poemRef.current.toggleAllStrophes()
+      // Update the context state to reflect the current visibility
+      setAllStrophesVisible(poemRef.current.getAllStrophesVisible())
+    }
+  }
+
+  // Set up the toggle function and initial state when component mounts
+  useEffect(() => {
+    setToggleFunction(handleToggleAllStrophes)
+    if (poemRef.current) {
+      setAllStrophesVisible(poemRef.current.getAllStrophesVisible())
+    }
+
+    // Clean up when component unmounts
+    return () => {
+      setToggleFunction(null)
+    }
+  }, [])
+
   const seoTitle = 'Le Lion et le moucheron - La Fontaine'
   const seoDescription = "Va-t'en, chétif insecte, excrément de la terre! C'est en ces mots..."
 
@@ -88,7 +113,7 @@ export default function LionEtMoucheron() {
         }}
       />
       <main>
-        <PoemDisplay title={poemTitle} author={poemAuthor} date={poemDate} strophes={poemStrophes} />
+        <PoemDisplay ref={poemRef} title={poemTitle} author={poemAuthor} date={poemDate} strophes={poemStrophes} />
       </main>
     </>
   )
