@@ -4,7 +4,9 @@ import { LinkComponent } from './LinkComponent'
 import { ThemeSwitcher } from './ThemeSwitcher'
 import { SITE_NAME } from '../../utils/config'
 import { FaGithub } from 'react-icons/fa'
-import { HamburgerIcon } from '@chakra-ui/icons'
+import { HamburgerIcon, ViewIcon, ViewOffIcon } from '@chakra-ui/icons'
+import { useRouter } from 'next/router'
+import { usePoemContext } from './PoemContext'
 
 interface Props {
   className?: string
@@ -14,6 +16,23 @@ export function Header(props: Props) {
   const className = props.className ?? ''
   const bgColor = useColorModeValue('rgba(69, 162, 248, 0.1)', 'gray.900')
   const menuHoverBg = useColorModeValue('rgba(69, 162, 248, 0.2)', 'gray.700')
+  const router = useRouter()
+  const { toggleAllStrophes, allStrophesVisible } = usePoemContext()
+
+  // Check if we're on a poem page (has a poem slug)
+  const isPoemPage =
+    router.pathname.includes('/') &&
+    (router.pathname.includes('/lafontaine/') ||
+      router.pathname.includes('/rimbaud/') ||
+      router.pathname.includes('/valery/') ||
+      router.pathname.includes('/libai/')) &&
+    router.pathname.split('/').length > 2
+
+  const handleToggle = () => {
+    if (toggleAllStrophes) {
+      toggleAllStrophes()
+    }
+  }
 
   return (
     <Flex as="header" className={className} bg={bgColor} px={4} py={5} mb={8} alignItems="center">
@@ -24,6 +43,19 @@ export function Header(props: Props) {
       </LinkComponent>
 
       <Spacer />
+
+      {/* Toggle all strophes button - only visible on poem pages */}
+      {isPoemPage && toggleAllStrophes && (
+        <IconButton
+          aria-label={allStrophesVisible ? 'Hide all strophes' : 'Show all strophes'}
+          icon={allStrophesVisible ? <ViewOffIcon /> : <ViewIcon />}
+          size="sm"
+          mr={4}
+          _hover={{ bg: menuHoverBg }}
+          onClick={handleToggle}
+        />
+      )}
+
       <Menu>
         <MenuButton as={IconButton} aria-label="Options" icon={<HamburgerIcon />} size={'sm'} mr={4} _hover={{ bg: menuHoverBg }} />
         <MenuList>

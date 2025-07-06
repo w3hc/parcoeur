@@ -1,5 +1,5 @@
 import { Text, VStack, Box, Flex, useColorModeValue } from '@chakra-ui/react'
-import { useState } from 'react'
+import { useState, useImperativeHandle, forwardRef } from 'react'
 
 interface PoemDisplayProps {
   title: string
@@ -9,13 +9,27 @@ interface PoemDisplayProps {
   isChinese?: boolean
 }
 
-const PoemDisplay: React.FC<PoemDisplayProps> = ({ title, author, date, strophes, isChinese = false }) => {
+export interface PoemDisplayRef {
+  toggleAllStrophes: () => void
+  getAllStrophesVisible: () => boolean
+}
+
+const PoemDisplay = forwardRef<PoemDisplayRef, PoemDisplayProps>(({ title, author, date, strophes, isChinese = false }, ref) => {
   const getAllVerses = strophes.flat()
   const numPairs = Math.ceil(getAllVerses.length / 2)
   const [visibleStates, setVisibleStates] = useState(new Array(numPairs).fill(true))
 
   const hoverVisibleBg = useColorModeValue('rgba(69, 162, 248, 0.1)', 'rgba(69, 162, 248, 0.2)')
   const hoverHiddenBg = useColorModeValue('rgba(69, 162, 248, 0.05)', 'rgba(69, 162, 248, 0.1)')
+
+  // Expose methods to parent component
+  useImperativeHandle(ref, () => ({
+    toggleAllStrophes: () => {
+      const allVisible = visibleStates.every((state) => state)
+      setVisibleStates(new Array(numPairs).fill(!allVisible))
+    },
+    getAllStrophesVisible: () => visibleStates.every((state) => state),
+  }))
 
   // Helper function to detect if text contains Chinese characters
   const containsChinese = (text: string) => {
@@ -101,6 +115,8 @@ const PoemDisplay: React.FC<PoemDisplayProps> = ({ title, author, date, strophes
       </Box>
     </VStack>
   )
-}
+})
+
+PoemDisplay.displayName = 'PoemDisplay'
 
 export default PoemDisplay

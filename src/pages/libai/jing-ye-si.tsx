@@ -1,12 +1,16 @@
 import { NextSeo } from 'next-seo'
-import PoemDisplay from '../../components/layout/PoemDisplay'
+import PoemDisplay, { PoemDisplayRef } from '../../components/layout/PoemDisplay'
 import { SITE_URL } from '../../utils/config'
+import { useRef, useEffect } from 'react'
+import { usePoemContext } from '../../components/layout/PoemContext'
 
 export default function JingYeSi() {
   const poemTitle = '静夜思 (Quiet Night Thoughts)'
   const poemAuthor = '李白 (Li Bai)'
   const poemDate = '约725年'
   const isChinese = true
+  const poemRef = useRef<PoemDisplayRef>(null)
+  const { setToggleFunction, setAllStrophesVisible } = usePoemContext()
 
   const poemStrophes = [
     ['床前明月光', 'Chuáng qián míng yuè guāng'],
@@ -14,6 +18,27 @@ export default function JingYeSi() {
     ['举头望明月', 'Jǔ tóu wàng míng yuè'],
     ['低头思故乡', 'Dī tóu sī gù xiāng'],
   ]
+
+  const handleToggleAllStrophes = () => {
+    if (poemRef.current) {
+      poemRef.current.toggleAllStrophes()
+      // Update the context state to reflect the current visibility
+      setAllStrophesVisible(poemRef.current.getAllStrophesVisible())
+    }
+  }
+
+  // Set up the toggle function and initial state when component mounts
+  useEffect(() => {
+    setToggleFunction(handleToggleAllStrophes)
+    if (poemRef.current) {
+      setAllStrophesVisible(poemRef.current.getAllStrophesVisible())
+    }
+
+    // Clean up when component unmounts
+    return () => {
+      setToggleFunction(null)
+    }
+  }, [])
 
   const seoTitle = '静夜思 (Quiet Night Thoughts) - Li Bai'
   const seoDescription = '床前明月光，疑是地上霜 - Classical Chinese poem by Li Bai with pinyin'
@@ -50,7 +75,7 @@ export default function JingYeSi() {
         }}
       />
       <main>
-        <PoemDisplay title={poemTitle} author={poemAuthor} date={poemDate} strophes={poemStrophes} isChinese={isChinese} />
+        <PoemDisplay ref={poemRef} title={poemTitle} author={poemAuthor} date={poemDate} strophes={poemStrophes} isChinese={isChinese} />
       </main>
     </>
   )

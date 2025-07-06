@@ -5,6 +5,7 @@ import { DefaultSeo } from 'next-seo'
 import { SITE_NAME, SITE_DESCRIPTION, SITE_URL, SOCIAL_TWITTER } from '../utils/config'
 import { useIsMounted } from '../hooks/useIsMounted'
 import ErrorBoundary from '../components/layout/ErrorBoundary'
+import { PoemProvider } from '../components/layout/PoemContext'
 
 export default function App({ Component, pageProps }: AppProps) {
   const isMounted = useIsMounted()
@@ -46,11 +47,13 @@ export default function App({ Component, pageProps }: AppProps) {
       />
       <ErrorBoundary>
         <ChakraProvider>
-          {isMounted && (
-            <Layout>
-              <Component {...pageProps} />
-            </Layout>
-          )}
+          <PoemProvider>
+            {isMounted && (
+              <Layout>
+                <Component {...pageProps} />
+              </Layout>
+            )}
+          </PoemProvider>
         </ChakraProvider>
       </ErrorBoundary>
     </>
