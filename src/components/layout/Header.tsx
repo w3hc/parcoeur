@@ -42,6 +42,11 @@ export function Header(props: Props) {
               Valéry
             </MenuItem>
           </LinkComponent>
+          <LinkComponent href="/libai">
+            <MenuItem fontSize="md" _hover={{ bg: menuHoverBg }}>
+              李白
+            </MenuItem>
+          </LinkComponent>
         </MenuList>
       </Menu>
       <Flex alignItems="center" gap={4}>

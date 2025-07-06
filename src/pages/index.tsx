@@ -20,6 +20,11 @@ const poets = [
     path: '/valery',
     description: '1871-1945',
   },
+  {
+    name: '李白 (Li Bai)',
+    path: '/libai',
+    description: '701-762',
+  },
 ]
 
 export default function Home() {
