@@ -13,10 +13,10 @@ export default function JingYeSi() {
   const { setToggleFunction, setAllStrophesVisible } = usePoemContext()
 
   const poemStrophes = [
-    ['床前明月光', 'Chuáng qián míng yuè guāng'],
-    ['疑是地上霜', 'Yí shì dì shàng shuāng'],
-    ['举头望明月', 'Jǔ tóu wàng míng yuè'],
-    ['低头思故乡', 'Dī tóu sī gù xiāng'],
+    ['床前明月光', 'chuáng qián míng yuè guāng'],
+    ['疑是地上霜', 'yí shì dì shàng shuāng'],
+    ['举头望明月', 'jǔ tóu wàng míng yuè'],
+    ['低头思故乡', 'dī tóu sī gù xiāng'],
   ]
 
   const handleToggleAllStrophes = () => {
