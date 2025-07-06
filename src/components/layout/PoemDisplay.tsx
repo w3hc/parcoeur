@@ -6,15 +6,21 @@ interface PoemDisplayProps {
   author: string
   date: string
   strophes: string[][]
+  isChinese?: boolean
 }
 
-const PoemDisplay: React.FC<PoemDisplayProps> = ({ title, author, date, strophes }) => {
+const PoemDisplay: React.FC<PoemDisplayProps> = ({ title, author, date, strophes, isChinese = false }) => {
   const getAllVerses = strophes.flat()
   const numPairs = Math.ceil(getAllVerses.length / 2)
   const [visibleStates, setVisibleStates] = useState(new Array(numPairs).fill(true))
 
   const hoverVisibleBg = useColorModeValue('rgba(69, 162, 248, 0.1)', 'rgba(69, 162, 248, 0.2)')
   const hoverHiddenBg = useColorModeValue('rgba(69, 162, 248, 0.05)', 'rgba(69, 162, 248, 0.1)')
+
+  // Helper function to detect if text contains Chinese characters
+  const containsChinese = (text: string) => {
+    return /[\u4e00-\u9fff]/.test(text)
+  }
 
   const renderVersePairs = () => {
     let currentPairIndex = 0
@@ -50,7 +56,19 @@ const PoemDisplay: React.FC<PoemDisplayProps> = ({ title, author, date, strophes
                       transition: visibleStates[pairIndexGlobal] ? 'none' : 'opacity 0.5s ease-out',
                       opacity: visibleStates[pairIndexGlobal] ? 1 : 0,
                     }}>
-                    {verse}
+                    <Text
+                      fontSize={
+                        isChinese
+                          ? containsChinese(verse)
+                            ? '2xl'
+                            : 'sm' // Large for Chinese, small for pinyin
+                          : 'xl' // Default for French poems
+                      }
+                      fontWeight={isChinese && containsChinese(verse) ? 'medium' : 'normal'}
+                      color={isChinese && !containsChinese(verse) ? 'gray.500' : 'inherit'}
+                      fontFamily={isChinese && containsChinese(verse) ? "'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', sans-serif" : 'inherit'}>
+                      {verse}
+                    </Text>
                   </Box>
                 ))}
               </Flex>
