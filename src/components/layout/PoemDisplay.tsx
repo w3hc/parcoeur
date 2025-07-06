@@ -72,14 +72,10 @@ const PoemDisplay = forwardRef<PoemDisplayRef, PoemDisplayProps>(({ title, autho
                     }}>
                     <Text
                       fontSize={
-                        isChinese
-                          ? containsChinese(verse)
-                            ? '2xl'
-                            : 'sm' // Large for Chinese, small for pinyin
-                          : 'xl' // Default for French poems
+                        isChinese ? (containsChinese(verse) ? '2xl' : 'md') : 'xl' // Default for French poems
                       }
                       fontWeight={isChinese && containsChinese(verse) ? 'medium' : 'normal'}
-                      color={isChinese && !containsChinese(verse) ? 'gray.500' : 'inherit'}
+                      color={isChinese && !containsChinese(verse) ? '#45a2f8' : 'inherit'} // Changed from 'gray.500' to blue
                       fontFamily={isChinese && containsChinese(verse) ? "'Noto Sans SC', 'PingFang SC', 'Hiragino Sans GB', sans-serif" : 'inherit'}>
                       {verse}
                     </Text>
@@ -108,7 +104,7 @@ const PoemDisplay = forwardRef<PoemDisplayRef, PoemDisplayProps>(({ title, autho
           {renderVersePairs()}
         </Box>
         <Flex justify="flex-end" mt={10} mb={20}>
-          <Text fontSize="md" color={'#45a2f8'}>
+          <Text fontSize="md" color={isChinese ? 'white' : '#45a2f8'}>
             — {author}, <i>{title}</i>, {date}
           </Text>
         </Flex>
