@@ -4,7 +4,7 @@ import { LinkComponent } from '../components/layout/LinkComponent'
 import { NextSeo } from 'next-seo'
 import { SITE_URL } from '../utils/config'
 
-const poets = [
+const authors = [
   {
     name: 'Jean de La Fontaine',
     path: '/lafontaine',
@@ -30,8 +30,8 @@ const poets = [
 export default function Home() {
   const hoverBg = useColorModeValue('rgba(69, 162, 248, 0.1)', 'rgba(69, 162, 248, 0.2)')
 
-  const seoTitle = 'Par coeur - Poèmes classiques français'
-  const seoDescription = 'Apprenez par coeur quelques beaux poèmes de La Fontaine, Rimbaud et Valéry'
+  const seoTitle = 'Par coeur - Poèmes et textes classiques'
+  const seoDescription = 'Apprenez par coeur quelques beaux poèmes de La Fontaine, Rimbaud, Valéry, Li Bai et des textes contemporains'
 
   return (
     <>
@@ -51,7 +51,7 @@ export default function Home() {
               url: `${SITE_URL}/huangshan.png`,
               width: 1200,
               height: 630,
-              alt: 'Par coeur - Poésie française classique',
+              alt: 'Par coeur - Poésie et littérature',
             },
           ],
         }}
@@ -62,7 +62,7 @@ export default function Home() {
         additionalMetaTags={[
           {
             name: 'keywords',
-            content: 'poésie, poèmes, littérature française, La Fontaine, Rimbaud, Valéry, apprendre par coeur',
+            content: 'poésie, poèmes, littérature française, La Fontaine, Rimbaud, Valéry, Li Bai, Julien Béranger, apprendre par coeur',
           },
           {
             name: 'author',
@@ -72,9 +72,9 @@ export default function Home() {
       />
       <VStack spacing={8} align="stretch">
         <List spacing={4}>
-          {poets.map((poet) => (
+          {authors.map((author) => (
             <ListItem
-              key={poet.name}
+              key={author.name}
               p={4}
               borderRadius="md"
               _hover={{
@@ -82,13 +82,13 @@ export default function Home() {
                 transform: 'translateX(8px)',
                 transition: 'all 0.2s',
               }}>
-              <LinkComponent href={poet.path}>
+              <LinkComponent href={author.path}>
                 <Box>
                   <Text fontSize="xl" fontWeight="bold">
-                    {poet.name}
+                    {author.name}
                   </Text>
                   <Text fontSize="md" color="#45a2f8">
-                    {poet.description}
+                    {author.description}
                   </Text>
                 </Box>
               </LinkComponent>
