@@ -39,18 +39,19 @@ export function Header(props: Props) {
   // State to control the animation
   const [showHint, setShowHint] = useState(false)
 
-  // Check if we're on a poem page (has a poem slug)
-  const isPoemPage =
+  // Check if we're on a poem/text page (has a content slug)
+  const isContentPage =
     router.pathname.includes('/') &&
     (router.pathname.includes('/lafontaine/') ||
       router.pathname.includes('/rimbaud/') ||
       router.pathname.includes('/valery/') ||
-      router.pathname.includes('/libai/')) &&
+      router.pathname.includes('/libai/') ||
+      router.pathname.includes('/julien/')) &&
     router.pathname.split('/').length > 2
 
-  // Show hint animation when landing on a poem page
+  // Show hint animation when landing on a content page
   useEffect(() => {
-    if (isPoemPage) {
+    if (isContentPage) {
       // Small delay to let the page load first
       const timer = setTimeout(() => {
         setShowHint(true)
@@ -65,7 +66,7 @@ export function Header(props: Props) {
 
       return () => clearTimeout(timer)
     }
-  }, [isPoemPage, router.pathname])
+  }, [isContentPage, router.pathname])
 
   const handleToggle = () => {
     if (toggleAllStrophes) {
@@ -85,8 +86,8 @@ export function Header(props: Props) {
 
       <Spacer />
 
-      {/* Toggle all strophes button - only visible on poem pages */}
-      {isPoemPage && toggleAllStrophes && (
+      {/* Toggle all strophes button - only visible on content pages */}
+      {isContentPage && toggleAllStrophes && (
         <IconButton
           aria-label={allStrophesVisible ? 'Hide all strophes' : 'Show all strophes'}
           icon={allStrophesVisible ? <ViewOffIcon /> : <ViewIcon />}
@@ -122,6 +123,11 @@ export function Header(props: Props) {
           <LinkComponent href="/libai">
             <MenuItem fontSize="md" _hover={{ bg: menuHoverBg }}>
               李白
+            </MenuItem>
+          </LinkComponent>
+          <LinkComponent href="/julien/hands-off-palestine">
+            <MenuItem fontSize="md" _hover={{ bg: menuHoverBg }}>
+              Hands Off Palestine
             </MenuItem>
           </LinkComponent>
         </MenuList>
